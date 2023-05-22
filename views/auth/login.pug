@@ -1,0 +1,24 @@
+extends ../layout/index
+
+block contenido
+    .py-10  
+        h1.text-3xl.my-10.font-extrabold.text-center.text-green-500 Facultad de Ciencias Naturales
+        h2.text-1xl.my-10.font-normal.text-center.text-blue-600 Laboratorio de Patologia veterinaria - Resultados
+        h2.text-center.text-2xl.font-extrabold= pagina
+
+        .mt-8.mx-auto.max-w-md
+            .bg-white.py-8.px-8.shadow.rounded-lg
+                form.space-y-5
+                    
+                    div 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="nombre") Email de Registro
+                        input#email.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Tu Email" type = "email" name = "email")
+                    div 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="password") Password
+                        input#password.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Password" type = "password" name = "password")
+
+                    .flex.items-center.justify-between 
+                        a.text-gray-500.text-xs(href="/auth/registro") ¿No tienes cuenta? Crea una cuenta
+                        a.text-gray-500.text-xs(href="/auth/Olvide-password") Olvide mi password 
+                  
+                    input(class = "w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Iniciar Sesión")

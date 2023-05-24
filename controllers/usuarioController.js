@@ -1,6 +1,7 @@
 import {check, validationResult} from 'express-validator';
 //Check valida en un campo en especifico y validatorResult valida el resultado
 import Usuario from '../models/Usuario.js';
+import {generarId} from '../helpers/tokens.js'
 
 const formularioLogin = (req, res) => {
         //Primer parametro la vista, el segundo la informacion que se pasa a la vista
@@ -70,7 +71,7 @@ const registrar = async(req, res) => {
         nombre,
         email,
         password,
-        token: 123
+        token: generarId()
     })
    
     //console.log(existeUsuario)

@@ -34,17 +34,52 @@ const registrar = async(req, res) => {
             pagina: 'Crear Cuenta',
             //Se obtine un resultado que se convierte en un arreglo para iterarlo
             //Se itera dentro de un div en la pantalla de crearCuenta
-            errores: resultado.array()
+            errores: resultado.array(),
+            usuario:{
+                nombre:req.body.nombre,
+                email:req.body.email,
+
+            },
         })
 
     }
+    //Extraemos los valore
+    const {nombre, email, password} = req.body
+    //Verificar que el usuario no este duplicado
+    //Consulta y busca en la base hasta maximo un usuario: email
+    const existeUsuario = await Usuario.findOne({where:{email}})
 
-    res.json(resultado.array());
+   if(existeUsuario){
+    return res.render('auth/registro', {
+        pagina: 'Crear Cuenta',
+        //Se obtine un resultado que se convierte en un arreglo para iterarlo
+        //Se itera dentro de un div en la pantalla de crearCuenta
+        //Se crea un arreglo al vuelo, se crea en el momendto
+        errores: [{msg:'El Usuario ya está Registrado'}],
+        usuario:{
+            nombre:req.body.nombre,
+            email:req.body.email,
+
+        },
+   })
+
+}
+    //Almacenar un usuario
+
+    await Usuario.create({
+        nombre,
+        email,
+        password,
+        token: 123
+    })
+   
+    //console.log(existeUsuario)
+    //return;
 
     //insercion 
-    const usuario = await Usuario.create(req.body)
+    //const usuario = await Usuario.create(req.body)
 
-    res.json(usuario)
+    //res.json(usuario)
 }
 
 const formularioOlvidePassword = (req, res) => {

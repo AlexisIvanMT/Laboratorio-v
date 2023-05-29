@@ -105,17 +105,50 @@ const registrar = async(req, res) => {
   //res.json(usuario)
 }
 //Funcion que comprueba una cuenta
-const confirmar =(req, res) => {
- //Si queremos leer los parametros usamos
+const confirmar = async(req, res) => {
+ //Si queremos leer los parametros usamos, accedemos al nombre que le dimos a la ruta por ejemplo token
  //Aplicamos distruct
- const {token} = req.params;
- console.log(token) 
+ const { token } = req.params;
+
+ //Verificar si el token es valido
+ //finOne 
+ // Se lee un objeto
+ const usuario = await Usuario.findOne({ where: {token} });
+
+ //Existe el Usuario
+ if (!usuario) {
+    return res.render('auth/confirmar-cuenta', {
+        //Cuando no exista el token. Esto imprime una vista
+        pagina: "Error al confirmar tu cuenta",
+        mensaje: "Hubo un error al confirmar tu cuenta, intenta de nuevo",
+        error: true
+    }) 
+ }
+  //Confirmar la cuenta
+  console.log(usuario)
+  //Se realizan cambios. Se borra el token
+ usuario.token = null;
+  //Cuando el usuario esta confirmado. El ORM lo trata como objeto y le da valor de 1
+ usuario.confirmado=true;
+  //Metodo del ORM que guarda loscambios en la BD
+  await usuario.save();
+  
+
+  return res.render('auth/confirmar-cuenta', {
+    //Cuando no exista el token. Esto imprime una vista
+    pagina: "Cuenta confirmada",
+    mensaje: "La cuenta se confirmo correctamente",
+
+  })
+
+
 }
 
 
 const formularioOlvidePassword = (req, res) => {
     res.render('auth/olvide-password', {
-        pagina: 'Recuperar Acceso'
+        pagina: "Cuenta creada corectamente",
+        mensaje: "Hemos enviado un mail de confirmacion, preciona sobre el enlace",
     })
 }
 

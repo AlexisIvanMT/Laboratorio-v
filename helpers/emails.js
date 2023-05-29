@@ -1,14 +1,17 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+dotenv.config({path: '.env'})
+//import { confirmar } from '../controllers/usuarioController';
 
 //Tenomso dos emails uno para crear la cuenta y otro para cuando el usuario se le olvide su password 
 
 const emailRegistro = async (datos) => {
     const  transport = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
-            port: prosses.env.EMAIL_PORT,
+            port: process.env.EMAIL_PORT,
             auth: {
-                user: prosses.env.EMAIL_USER,
-                pass: prosses.env.EMAIL_PASS
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
             }
       });
 
@@ -26,9 +29,9 @@ const emailRegistro = async (datos) => {
         text: 'Confima tu cuenta Laboratorio de veterinaria',
         //Colocamos un template con los datos
         html:`
-            <p> Hola ${nombre}, comprueba tu cuenta en el laboratorio de veterinaria  </p> 
+            <p> Hola ${nombre}, comprueba tu cuenta en el Laboratorio de Veterinaria  </p> 
 
-            <p> Confirma tu cuanta en el siguiente enlace <a href= ""> Confirmar cuenta </p> 
+            <p> Confirma tu cuenta en el siguiente enlace <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}"> Confirmar cuenta </p> 
         `
       })
 

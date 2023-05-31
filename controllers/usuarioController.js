@@ -7,14 +7,20 @@ import {emailRegistro} from '../helpers/emails.js'
 const formularioLogin = (req, res) => {
         //Primer parametro la vista, el segundo la informacion que se pasa a la vista
         res.render('auth/login', {
-            pagina: 'Iniciar Sesión'
+            pagina: 'Iniciar Sesión',
+            //Genera un token antes de renderizar la vista 
+            //csrfToken: req.csrfToken()
            
         })
  }
 
  const formularioRegistro = (req, res) => {
+
+  console.log(req.csrfToken());
+
     res.render('auth/registro', {
-        pagina: 'Crear Cuenta'
+        pagina: 'Crear Cuenta',
+        csrfToken : req.csrfToken() 
     })
 }
 
@@ -46,6 +52,7 @@ const registrar = async(req, res) => {
     //Errores
     return res.render("auth/registro", {
       pagina: "Crear Cuenta",
+      csrfToken : req.csrfToken(),
       //Se obtine un resultado que se convierte en un arreglo para iterarlo
       //Se itera dentro de un div en la pantalla de crearCuenta
       errores: resultado.array(),
@@ -64,6 +71,7 @@ const registrar = async(req, res) => {
   if (existeUsuario) {
     return res.render("auth/registro", {
       pagina: "Crear Cuenta",
+      csrfToken : req.csrfToken(),
       //Se obtine un resultado que se convierte en un arreglo para iterarlo
       //Se itera dentro de un div en la pantalla de crearCuenta
       //Se crea un arreglo al vuelo, se crea en el momendto

@@ -1,8 +1,9 @@
 import {check, validationResult} from 'express-validator';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 //Check valida en un campo en especifico y validatorResult valida el resultado
 import Usuario from '../models/Usuario.js';
-import {generarId} from '../helpers/tokens.js'
+import {generarJWT ,generarId} from '../helpers/tokens.js'
 import {emailRegistro, emailOlvidePassword} from '../helpers/emails.js'
 
 const formularioLogin = (req, res) => {
@@ -10,9 +11,101 @@ const formularioLogin = (req, res) => {
         res.render('auth/login', {
             pagina: 'Iniciar Sesión',
             //Genera un token antes de renderizar la vista 
-            //csrfToken: req.csrfToken()
+            csrfToken: req.csrfToken()
            
         })
+ }
+
+ const autenticar = async (req, res) => {
+    //Validacion
+    await check("email")
+    .isEmail()
+    .withMessage("El email es obligatorio")
+    .run(req);
+  await check("password")
+    .notEmpty()
+    .withMessage("El password es obligatorio")
+    .run(req);
+
+    let resultado = validationResult(req);
+
+    //return res.json(resultado.array())
+  
+    //Verificar que el resultado este vacio
+    if (!resultado.isEmpty()) {
+      //Errores
+      return res.render("auth/login", {
+        pagina: "Iniciar sesion",
+        csrfToken : req.csrfToken(),
+        //Se obtine un resultado que se convierte en un arreglo para iterarlo
+        //Se itera dentro de un div en la pantalla de crearCuenta
+        errores: resultado.array(),
+      });
+    }
+
+    const {email, password} = req.body;
+    //Comprobar si el usuario existe
+    const usuario = await Usuario.findOne({ where : {email}})
+
+    if(!usuario){
+      //Errores
+      return res.render("auth/login", {
+        pagina: "Iniciar sesion",
+        csrfToken : req.csrfToken(),
+        //Se obtine un resultado que se convierte en un arreglo para iterarlo
+        //Se itera dentro de un div en la pantalla de crearCuenta
+        errores: [{msg: 'El usuario no existe'}]
+      });
+
+    }
+
+    //Comprobar si el usuario esta confirmado
+
+    if(!usuario.confirmado){
+      //Errores
+      return res.render("auth/login", {
+        pagina: "Iniciar sesion",
+        csrfToken : req.csrfToken(),
+        //Se obtine un resultado que se convierte en un arreglo para iterarlo
+        //Se itera dentro de un div en la pantalla de crearCuenta
+        errores: [{msg: 'Tu cuenta no ha sido confirmada'}]
+      });
+
+    }
+
+    //Rvisar el password
+    //Toma el password del prototipe de Usuario.js
+    //Si retorna false el password es incorrecto
+    if(!usuario.verificarPassword(password)){
+       //Errores
+       return res.render("auth/login", {
+        pagina: "Iniciar sesion",
+        csrfToken : req.csrfToken(),
+        //Se obtine un resultado que se convierte en un arreglo para iterarlo
+        //Se itera dentro de un div en la pantalla de crearCuenta
+        errores: [{msg: 'El password es incorrecto'}]
+      });
+    }
+    //Autenticar al usuario 
+    const token = generarJWT( {id: usuario.id, nombre: usuario.nombre});
+
+    //.sing metodo para crear un jwt 
+    
+    console.log(token)
+    //Almacenar en un cookie
+    //Anteriormente habilitamos el cookie parser en index 
+    //Podemos usar la funcion en para poder escribir en los cookies
+    //Se va almacenar en la base de datos no en memoria
+    return res.cookie('_token', token, {
+      //Evita los ataques cross
+      //El cookie no es accesible desde la la api de jascript 
+      httpOnly: true,
+      //Permite los cookies en conecciones seguras
+      //secure: true,
+      //sameSite: true
+    }).redirect('/examenes')
+
+
  }
 
  const formularioRegistro = (req, res) => {
@@ -45,6 +138,7 @@ const registrar = async(req, res) => {
     .equals(req.body.password)
     .withMessage("El password  debe ser igual")
     .run(req);
+
   let resultado = validationResult(req);
 
   //return res.json(resultado.array())
@@ -283,12 +377,14 @@ const nuevoPassword = async (req, res) => {
 
  export{
     formularioLogin,
+    autenticar,
     formularioRegistro,
     registrar,
     confirmar,
     formularioOlvidePassword,
     resetPassword,
     comprobarToken,
-    nuevoPassword
- }
+    nuevoPassword,
+    
 
+ }

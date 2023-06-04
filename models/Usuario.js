@@ -34,4 +34,12 @@ const Usuario = db.define('Usuarios',{
     }
 })
 
+//Metodos Personalizados
+//This es la instancia de la base de datos
+Usuario.prototype.verificarPassword = function(password) {
+    //Comprobar el password que esta hasheado en la base de datos
+    //Es el password que el usuario ingreso
+    return bcrypt.compareSync(password, this.password);
+}
+
 export default Usuario;

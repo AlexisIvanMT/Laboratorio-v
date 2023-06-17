@@ -1,0 +1,308 @@
+extends ../layout/index
+
+block contenido
+    .py-5
+        h1.text-2xl.my-10.font-extrabold.text-center.text-green-500 Laboratorio de Patologia veterinaria - Crear
+        h2.text-1xl.my-10.font-normal.text-center.text-blue-600 Para poder avanzar y completar los formularios de resultados, primero es necesario llenar el formulario de caso.
+        h2.text-center.text-2xl.font-extrabold= pagina
+
+        div(class="bg-white shadow py-8 px-4 rounded-lg mx-auto max-w-4xl my-10")
+          form.space-y-8(method="POST" action="/examenes/form-hematologia")
+            input(type="hidden" name="_csrf" value=csrfToken)
+          
+            .space-y-4
+               h3.text-lg.leading-6.font-medium.text-gray-900 Informacion General del Caso
+               p.text-gray-600 Añade Informacion sobre un caso en especifico
+               
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="anamnesis") Anamnesis
+                  textarea#anamnesis.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="anamnesis")
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="tratamiento") Tratamiento Previo: 
+                  textarea#tratamiento.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="tratamiento")
+
+               div(class="md:flex md:gap-4 space-x-5 md:space-y-0") 
+                      
+                      div(class="md:w-1/2")
+                          label.block.text-sm.uppercase.text-gray-400.mb-3.font-bold(for="casoId") Nombre del paciente 
+                          select#casoId.w-full.px-3.py-2.border.border-gray-300.rounded-mb.placeholder-gray-400(name="casoId") 
+                              option(value="") - Caso - 
+                              each caso in casos
+                                  option(value=caso.id)= caso.paciente 
+
+               
+               
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="hematocitos" class="block text-sm uppercase  text-sky-500 mb-2 font-bold") Hematocitos:
+                        select#hematocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="hematocitos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="hemoglobina" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Hemoglobina:
+                        select#hemoglobina.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="hemoglobina" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="eritrocitos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Eritrocitos:
+                        select#eritrocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="eritrocitos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="vgm" class="block text-sm uppercase text-sky-500 mb-2 font-bold") VGM:
+                        select#vgm.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="vgm" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="cgmh" class="block text-sm uppercase text-sky-500 mb-2 font-bold") CGMH:
+                        select#cgmh.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="cgmh" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="reticulocitos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Reticulocitos:
+                        select#reticulocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="reticulocitos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="plaquetas" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Plaquetas:
+                        select#plaquetas.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="plaquetas" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="solidos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Solidos totales:
+                        select#solidos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="solidos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="leucocitos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Leucocitos totales:
+                        select#leucocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="leucocitos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="neutrofilos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Neutrofilos:
+                        select#neutrofilos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="neutrofilos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="bandas" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Bandas:
+                        select#bandas.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="bandas" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="linfocitos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Linfocitos:
+                        select#linfocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="linfocitos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="monocitos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Monocitos:
+                        select#monocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="monocitos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="eosinofilos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Eosinofilos:
+                        select#eosinofilos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="eosinofilos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="basofilos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Basofilos:
+                        select#basofilos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="basofilos" required)
+                           option(value="") Seleccione una opción
+                           option(value="alto") Alto
+                           option(value="bajo") Bajo
+                           option(value="NC") NC
+                           option(value="-") -
+
+                  div(style="margin-right: 10px;")
+                     label(for="artefactos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Artefactos:
+                     input#artefactos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(type="number", name="artefactos" required)
+
+                  
+
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                  div(style="margin-right: 10px;")
+                     label(for="anisocitosis" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Anisocitosis:
+                     select#anisocitosis.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400( name="anisocitosis" required)
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+
+                  div(style="margin-right: 10px;")
+                     label(for="policomasia" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Policomasia:
+                     select#policomasia.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(name="policomasia" required)
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+                  
+                  div(style="margin-right: 10px;")
+                     label(for="basofilico" class="block text-sm uppercase text-sky-500 mb-2 font-bold") P.Basofilico:
+                     select#basofilico.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(name="basofilico" required)
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+
+                  div(style="margin-right: 10px;")
+                     label(for="hipocromia" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Hipocromia:
+                     select#hipocromia.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(name="hipocromia" required)
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+               
+
+                  div(style="margin-right: 10px;")
+                     label(for="rouleaux" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Rouleaux:
+                     select#rouleaux.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(name="rouleaux" required)
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+
+                  div(style="margin-right: 10px;")
+                     label(for="metarrubricitos" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Metarrubricitos:
+                     select#metarrubricitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(name="metarrubricitos" required)
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+ 
+
+                  div(style="margin-right: 10px;")
+                     label(for="poiquilocitosis" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Poiquilocitosis:
+                     select#poiquilocitosis.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(name="poiquilocitosis" required)
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="tipo") Tipo
+                  textarea#tipo.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="tipo")                                  
+               
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+
+                  div(style="margin-right: 10px;")
+                     label(for="neutrofilosT" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Neutrofilos Toxicos:
+                     select#neutrofilosT.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(required name="neutrofilosT")
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+
+                  div(style="margin-right: 10px;")
+                     label(for="linfocitosR" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Linfocitos Reactivos:
+                     select#linfocitosR.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(required name="linfocitosR")
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+                  
+                  div(style="margin-right: 10px;")
+                     label(for="mielo" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Mielo Inmaduros:
+                     select#mielo.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(required name="mielo")
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+
+                  div(style="margin-right: 10px;")
+                     label(for="microfilarias" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Microfilarias:
+                     select#microfilarias.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(required name="microfilarias")
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+               
+
+                  div(style="margin-right: 10px;")
+                     label(for="macroplaquetas" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Macroplaquetas:
+                     select#macroplaquetas.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(required name="macroplaquetas")
+                        option(value="-") -
+                        option(value="1+") 1+
+                        option(value="2+") 2+
+                        option(value="3+") 3+
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="interpretacion") Interpretación: 
+                  textarea#interpretacion.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="interpretacion")
+
+               input(class = "w-full inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 cursor-pointer rounded-lg" type="submit" value="Registrar")
+
+                  

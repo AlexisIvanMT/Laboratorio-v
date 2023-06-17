@@ -1,0 +1,155 @@
+extends ../layout/index
+
+block contenido
+    .py-5
+        h1.text-2xl.my-10.font-extrabold.text-center.text-green-500 Laboratorio de Patologia veterinaria - Crear
+        h2.text-1xl.my-10.font-normal.text-center.text-blue-600 Para poder avanzar y completar los formularios de resultados, primero es necesario llenar el formulario de caso.
+        h2.text-center.text-2xl.font-extrabold= pagina
+
+        div(class="bg-white shadow py-8 px-4 rounded-lg mx-auto max-w-4xl my-10")
+         form.space-y-8(method="POST" action="/examenes/form-urianalisis")
+            input(type="hidden" name="_csrf" value=csrfToken)
+          
+            .space-y-4
+               h3.text-lg.leading-6.font-medium.text-gray-900 Informacion General del Caso
+               p.text-gray-600 Añade Informacion sobre un caso en especifico
+               
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="anamnesis") Anamnesis:
+                  textarea#anamnesis.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="anamnesis")
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="tratamiento") Tratamiento Previo: 
+                  textarea#tratamiento.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="tratamiento")
+
+               div(class="md:flex md:gap-4 space-x-5 md:space-y-0") 
+                      
+                  div(class="md:w-1/2")
+                     label.block.text-sm.uppercase.text-gray-400.mb-3.font-bold(for="casoId") Nombre del paciente 
+                        select#casoId.w-full.px-3.py-2.border.border-gray-300.rounded-mb.placeholder-gray-400(name="casoId") 
+                            option(value="") - Caso - 
+                              each caso in casos
+                                 option(value=caso.id)= caso.paciente 
+
+               
+               
+               div(style="margin-right: 10px;")
+                           label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="metodoobtencion") Metodo de obtencion:
+                           select#metodoobtencion.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="metodoobtencion" required)
+                              option(value="") Seleccione una opcion
+                              option(value="noreferido") No referido
+                              option(value="miccion") Miccion
+                              option(value="cateterismo") Cateterismo
+                              option(value="cistocentesis") Cistocentesis
+
+               div
+                  label.block.text-sm.uppercase.text-sky-500.mb-2.font-bold(for="caso") Examén Fisico
+          
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+                  
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;") 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="color") Color:
+                        input#color.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese el color" type = "text" name = "color")
+                 
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")                 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="apariencia") Apariencia:
+                        select#apariencia.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="apariencia" required)
+                           option(value="") Seleccione una opcion
+                           option(value="raspado") Transparente
+                           option(value="turbio1") Turbio 1+
+                           option(value="turbio2") Turbio 2+
+                           option(value="turbio3") Turbio 3+
+                  
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;") 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="densidad") Densidad:
+                        input#densidad.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese DUe" type = "text" name = "densidad")
+
+               div
+                  label.block.text-sm.uppercase.text-sky-500.mb-2.font-bold(for="caso") Examén Químico
+          
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")                 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="proteinas") Proteinas:
+                        select#proteinas.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="proteinas" required)
+                           option(value="") Seleccione una opcion
+                           option(value="0") Raspado cutaneo
+                           option(value="trazas") Identificacion directa
+                           option(value="0.15") Flotacion
+                           option(value="0.3") Faust
+                           option(value="1.0") Flotacion y faust
+                           option(value="3.0") Flotacion y faust
+                           option(value="20.0") Flotacion y faust                 
+              
+               
+               
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")                 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="sangreHg") sangreHg:
+                        select#sangreHg.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="sangreHg" required)
+                            option(value="") Seleccione una opcion
+                            option(value="0") 0
+                            option(value="5-10") 5 - 10
+                            option(value="50") 50
+                            option(value=">50") +50    
+
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;") 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="ph") pH:
+                        input#ph.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese el ph" type = "text" name = "ph")
+
+                  
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")                 
+                        label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="bilirrubina") Bilirrubina:
+                        select#bilirrubina.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="bilirrubina" required)
+                         option(value="") Seleccione una opcion
+                         option(value="negativo") Negativo
+                         option(value="1+") 1+
+                         option(value="2+") 2+
+                         option(value="3+") 3+  
+
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="eritrocitos") Eritrocitos
+                  input#eritrocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "eritrocitos")
+               
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="leucocitos") Leucocitos
+                  input#leucocitos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "leucocitos")
+
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="escamosas") Escamosas
+                  input#escamosas.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "escamosas")
+
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="transitorias") Transitorias
+                  input#transitorias.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "transitorias")
+
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="cilindros") Cilindros 
+                  input#cilindros.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "cilindros")
+               
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="renales") Renales
+                  input#renales.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "renales")
+
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="cristales") Cristales
+                  input#cristales.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "cristales")
+
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="lipidos") Lipidos
+                  input#lipidos.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "lipidos")
+
+               div 
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="bacterias") Bacterias
+                  input#bacterias.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" type = "textarea" name = "bacterias")
+         
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="interpretacion") Interpretación: 
+                  textarea#interpretacion.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="interpretacion")
+
+               input(class = "w-full inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 cursor-pointer rounded-lg" type="submit" value="Registrar")

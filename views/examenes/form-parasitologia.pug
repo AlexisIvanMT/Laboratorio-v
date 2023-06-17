@@ -1,0 +1,54 @@
+extends ../layout/index
+
+block contenido
+    .py-5
+        h1.text-2xl.my-10.font-extrabold.text-center.text-green-500 Laboratorio de Patologia veterinaria - Crear
+        h2.text-1xl.my-10.font-normal.text-center.text-blue-600 Para poder avanzar y completar los formularios de resultados, primero es necesario llenar el formulario de caso.
+        h2.text-center.text-2xl.font-extrabold= pagina
+
+        div(class="bg-white shadow py-8 px-4 rounded-lg mx-auto max-w-4xl my-10")
+         form.space-y-8(method="POST" action="/examenes/form-parasitologia")
+            input(type="hidden" name="_csrf" value=csrfToken)
+             
+            .space-y-4
+               h3.text-lg.leading-6.font-medium.text-gray-900 Informacion General del Caso
+               p.text-gray-600 Añade Informacion sobre un caso en especifico
+               
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="anamnesis") Anamnesis
+                  textarea#anamnesis.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="anamnesis")
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="tratamiento") Tratamiento Previo: 
+                  textarea#tratamiento.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="tratamiento")
+
+               div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
+               
+                      
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     label.block.text-sm.uppercase.text-gray-400.mb-3.font-bold(for="casoId") Nombre del paciente 
+                        select#casoId.w-full.px-3.py-2.border.border-gray-300.rounded-mb.placeholder-gray-400(name="casoId") 
+                            option(value="") - Caso - 
+                              each caso in casos
+                                 option(value=caso.id)= caso.paciente 
+                  
+                  div(style="display: flex; flex-direction: row; md:w-1/5")
+                     div(style="margin-right: 10px;")
+                        label(for="tecnica" class="block text-sm uppercase text-sky-500 mb-2 font-bold") Tecnica:
+                        select#tecnica.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400.block.text-sm.text-gray-400.mb-2.font-bold(name="tecnica" required)
+                           option(value="") Seleccione una opcion
+                           option(value="raspadocutaneo") Raspado cutaneo
+                           option(value="identificaciondirecta") Identificacion directa
+                           option(value="flotacion") Flotacion
+                           option(value="faust") Faust
+                           option(value="flotacionyfaust") Flotacion y faust
+               
+               
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="resultados") Resultados: 
+                  textarea#resultados.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="resultados")
+               
+               div
+                  label.block.text-sm.uppercase.text-gray-400.mb-2.font-bold(for="observaciones") Observaciones: 
+                  textarea#observaciones.w-full.px-3.py-1.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingrese la informacion correspondiente" name="observaciones")
+               
+               input(class = "w-full inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 cursor-pointer rounded-lg" type="submit" value="Registrar")

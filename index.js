@@ -2,12 +2,14 @@ import express from 'express';
 import csrf from 'csurf';
 import cookieParser from 'cookie-parser';
 import usuarioRoutes from './routes/usuarioRoutes.js';
+import examenRoutes from './routes/examenRoutes.js';
 import db from './config/db.js'
+import bodyParser from 'body-parser'
 
 // Crear la app
 const app = express();
 
-;
+
 
 //Necesitamso habilitar la lectura de datos de forms
 app.use(express.urlencoded({extended:true}));
@@ -18,7 +20,7 @@ app.use(cookieParser());
 //Habilitar el CSRF
 let csrfProtection = csrf({ cookie: true });
 app.use("/auth", csrfProtection, usuarioRoutes )
-
+app.use("/examenes", csrfProtection, examenRoutes)
 //Conexion a la base de datos 
 try {
     await db.authenticate();
@@ -38,7 +40,7 @@ app.use(express.static('public'));
 
 //Ruting. Todas las rutas inician /auth
 app.use('/auth',usuarioRoutes);
-
+app.use('/',examenRoutes);
 
 
 //Definir el puerto y arrancar el proyecto

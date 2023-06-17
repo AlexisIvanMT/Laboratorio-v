@@ -7,7 +7,9 @@ html(lang="es")
         //Nombre de la pagina de manera dinamica
         title CN UAQ | #{pagina}
         link(rel="stylesheet", href="/css/app.css")
-    body.min-h-screen.bg-gray-50
+    body.min-h-screen.bg-gray-200
+         if barra 
+            include header
 
-        main(class="mx-auto container mt-10 px-2")
+         main(class="mx-auto container mt-10 px-2")
             block contenido 

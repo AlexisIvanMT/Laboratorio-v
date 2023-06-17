@@ -8,6 +8,7 @@ router.post('/login', autenticar);
 
 router.get('/registro', formularioRegistro);
 router.post('/registro', registrar);
+
 //Obtenemos el token con una variable dinamica
 router.get('/confirmar/:token',confirmar);
 

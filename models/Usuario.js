@@ -31,6 +31,16 @@ const Usuario = db.define('Usuarios',{
             //Rescribimos el paswword antes de guardarlo en la base de datos
             usuario.password = await bcrypt.hash(usuario.password, salt)
         }
+    }, 
+    scopes: {
+        eliminarPassword: { 
+            attributes: {
+                //Elimina los campos de la consulta de Usuario
+                exclude: ['password', 'token', 'confirmado', 'createdAt', 'updatedAt']
+            }
+            
+        }
+
     }
 })
 

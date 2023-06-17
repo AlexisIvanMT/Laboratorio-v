@@ -103,7 +103,7 @@ const formularioLogin = (req, res) => {
       //Permite los cookies en conecciones seguras
       //secure: true,
       //sameSite: true
-    }).redirect('/examenes')
+    }).redirect('/mis-examenes')
 
 
  }
